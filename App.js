@@ -1,24 +1,25 @@
 import React from 'react';
-import { StyleSheet, View, SafeAreaView, StatusBar, Platform } from 'react-native';
+import { StyleSheet, View, StatusBar, Platform } from 'react-native';
 import {Appbar, Text, Provider as PaperProvider} from 'react-native-paper';
-import {createAppContainer, createBottomTabNavigator} from "react-navigation";
-import WindowGuard from "react-native-window-guard";
+import {createAppContainer, createBottomTabNavigator, SafeAreaView} from "react-navigation";
 
 const styles = StyleSheet.create({
     container: {
         flex: 1,
-        backgroundColor: '#fff',
+        backgroundColor: '#ff00ff',
         alignItems: 'center',
         // justifyContent: 'center'
-        paddingTop: Platform.OS === 'android' ? StatusBar.currentHeight : 0
+        // paddingTop: Platform.OS === 'android' ? StatusBar.currentHeight : 0
     },
 });
 
 function Screen1() {
     return (
-        <View style={styles.container}>
-            <Text>{Platform.OS}</Text>
-        </View>
+        <SafeAreaView style={{flex: 1, backgroundColor: '#ff00ff'}}  forceInset={{ top: 'always'}}>
+            <View style={styles.container}>
+                <Text>{Platform.OS}</Text>
+            </View>
+        </SafeAreaView>
     );
 }
 
@@ -34,7 +35,10 @@ const bottomNavigator = createBottomTabNavigator({
     Home: {
         screen: Screen1
     },
-    User: {
+    Cubes: {
+        screen: Screen2
+    },
+    Search: {
         screen: Screen2
     }
 });
@@ -42,19 +46,11 @@ const bottomNavigator = createBottomTabNavigator({
 const Container = createAppContainer( bottomNavigator );
 
 export default class App extends React.Component{
-    componentDidMount() {
-        WindowGuard.requestWindowInsets();
-    }
-
     render(){
         return(
-            <>
-                <PaperProvider>
-                    <WindowGuard applyInsets={WindowGuard.all}>
-                        <Container />
-                    </WindowGuard>
-                </PaperProvider>
-            </>
+            <PaperProvider>
+                <Container />
+            </PaperProvider>
         );
     }
 }
