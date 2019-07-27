@@ -1,56 +1,36 @@
 import React from 'react';
-import { StyleSheet, View, StatusBar, Platform } from 'react-native';
-import {Appbar, Text, Provider as PaperProvider} from 'react-native-paper';
-import {createAppContainer, createBottomTabNavigator, SafeAreaView} from "react-navigation";
+import { View, StatusBar, Platform } from 'react-native';
+import { SafeAreaView } from "react-navigation";
 
-const styles = StyleSheet.create({
-    container: {
-        flex: 1,
-        backgroundColor: '#ff00ff',
-        alignItems: 'center',
-        // justifyContent: 'center'
-        // paddingTop: Platform.OS === 'android' ? StatusBar.currentHeight : 0
-    },
-});
+// Paper UI
+import { Provider as PaperProvider } from 'react-native-paper';
 
-function Screen1() {
-    return (
-        <SafeAreaView style={{flex: 1, backgroundColor: '#ff00ff'}}  forceInset={{ top: 'always'}}>
-            <View style={styles.container}>
-                <Text>{Platform.OS}</Text>
-            </View>
-        </SafeAreaView>
-    );
-}
+// Navigator
+import Navigator from "~/components/Navigator";
 
-function Screen2(){
+
+export default () => {
+
     return(
-        <View style={styles.container}>
-            <Text>Test</Text>
-        </View>
+        // Paper's Theme provider TODO use actual themes
+        <PaperProvider>
+
+            {/* SAV only works for iPhone, so we're adding an additional padding on top for Android */}
+            <SafeAreaView
+                style={{
+                    backgroundColor: '#558ddd',
+                    paddingTop: Platform.OS === 'android' ? StatusBar.currentHeight : 0,
+                    flex: 1
+                }}
+            >
+
+                {/* An extra view to saturate the rest of the screen */}
+                <View style={{ flex: 1, backgroundColor:'#ff8737' }}>
+
+                    {/* The top level navigation container */}
+                    <Navigator/>
+                </View>
+            </SafeAreaView>
+        </PaperProvider>
     )
-}
-
-const bottomNavigator = createBottomTabNavigator({
-    Home: {
-        screen: Screen1
-    },
-    Cubes: {
-        screen: Screen2
-    },
-    Search: {
-        screen: Screen2
-    }
-});
-
-const Container = createAppContainer( bottomNavigator );
-
-export default class App extends React.Component{
-    render(){
-        return(
-            <PaperProvider>
-                <Container />
-            </PaperProvider>
-        );
-    }
 }
