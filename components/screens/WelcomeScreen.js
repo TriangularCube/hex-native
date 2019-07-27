@@ -1,7 +1,18 @@
 import React from 'react';
 import {View, Text, StatusBar, Button, Alert} from 'react-native';
 
-export default function Welcome(){
+import Auth from '@aws-amplify/auth';
+
+export default () => {
+
+    const getUser = async () => {
+        try{
+            const user = await Auth.currentAuthenticatedUser();
+            Alert.alert( null, user );
+        } catch( e ){
+            Alert.alert( null, 'Not logged in' );
+        }
+    };
 
     return(
         <View style={{ alignItems: 'center' }}>
@@ -10,9 +21,7 @@ export default function Welcome(){
             </Text>
             <View>
                 <Button
-                    onPress={ () => {
-                        Alert.alert( null, StatusBar.currentHeight.toString() );
-                    }}
+                    onPress={ getUser }
                     title='Press me!'
                 />
             </View>

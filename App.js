@@ -1,15 +1,25 @@
-import React from 'react';
-import { View, StatusBar, Platform } from 'react-native';
+import React, { useEffect } from 'react';
+import { View, StatusBar, Platform, AsyncStorage } from 'react-native';
 import { SafeAreaView } from "react-navigation";
 
 // Paper UI
 import { Provider as PaperProvider } from 'react-native-paper';
 
 // Navigator
-import Navigator from "~/components/Navigator";
+import Navigator from '~/components/Navigator';
 
+// Amplify config
+import { configure, targetName, DEV } from '~/util/amplify-config';
+
+AsyncStorage.getItem( targetName ).then( async (res) => {
+    console.log( res );
+    await configure( DEV );
+}).catch( (err) => {
+    console.log( err );
+});
 
 export default () => {
+
 
     return(
         // Paper's Theme provider TODO use actual themes
@@ -32,5 +42,5 @@ export default () => {
                 </View>
             </SafeAreaView>
         </PaperProvider>
-    )
+    );
 }
