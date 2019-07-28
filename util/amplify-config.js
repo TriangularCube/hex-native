@@ -53,6 +53,7 @@ const configAmplify = ( stage, poolID, appID ) => {
     // If this throws an error it should go back to the invoking code
     AsyncStorage.setItem( targetName, stage ).then( () => {
 
+        // Config Auth
         Auth.configure({
             mandatorySignIn: false,
             region: COGNITO_REGION,
@@ -62,6 +63,7 @@ const configAmplify = ( stage, poolID, appID ) => {
             storage: AsyncStorage
         });
 
+        // Config API
         API.configure({
             API:{
                 endpoints:[
