@@ -1,7 +1,7 @@
 import Auth from "@aws-amplify/auth";
 import API from "@aws-amplify/api";
 
-import { AsyncStorage } from "react-native";
+import { AsyncStorage, Alert } from "react-native";
 
 const targetName = 'APITarget';
 
@@ -50,30 +50,31 @@ const configure = ( stage ) => {
 
 const configAmplify = ( stage, poolID, appID ) => {
 
+    // Config Auth
+    Auth.configure({
+        mandatorySignIn: false,
+        region: COGNITO_REGION,
+        userPoolId: poolID,
+        userPoolWebClientId: appID
+    });
+
+    // Config API
+    API.configure({
+        API:{
+            endpoints:[
+                {
+                    name: 'hex',
+                    endpoint: API_URL + stage + '/'
+                }
+            ]
+        }
+    });
+
     // If this throws an error it should go back to the invoking code
-    AsyncStorage.setItem( targetName, stage ).then( () => {
+    AsyncStorage.setItem( targetName, stage ).catch( () => {
 
-        // Config Auth
-        Auth.configure({
-            mandatorySignIn: false,
-            region: COGNITO_REGION,
-            userPoolId: poolID,
-            userPoolWebClientId: appID,
+        Alert.alert( 'ERROR', 'Could not save target API endpoint, AsyncStorage Error' );
 
-            storage: AsyncStorage
-        });
-
-        // Config API
-        API.configure({
-            API:{
-                endpoints:[
-                    {
-                        name: 'hex',
-                        endpoint: API_URL + stage + '/'
-                    }
-                ]
-            }
-        });
     });
 
 };

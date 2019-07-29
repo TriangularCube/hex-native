@@ -1,18 +1,18 @@
-import React from 'react';
-import {View, Text, StatusBar, Button, Alert} from 'react-native';
+import React from "react";
+import {View, Text, StatusBar, Button, Alert} from "react-native";
+
+import amp from "~/util/amp";
 
 export default () => {
 
     return(
         <View style={{ alignItems: 'center' }}>
             <Text>
-                Welcome Screen!
+                This is the cube screen!
             </Text>
             <View>
                 <Button
-                    onPress={ () => {
-                        Alert.alert( null, StatusBar.currentHeight.toString() );
-                    }}
+                    onPress={ () => amp.Get( 'user/bluntweapon' ) }
                     title='Press me!'
                 />
             </View>
