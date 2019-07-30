@@ -75,7 +75,8 @@ export default createAppContainer( createMaterialBottomTabNavigator(
     },
     {
         // shifting: true,
-        // initialRouteName: 'Welcome'
+        // initialRouteName: 'Welcome',
+        lazy: false
     }
 ));
 

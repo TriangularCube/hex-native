@@ -16,6 +16,7 @@ const Profile = () => {
                     width: Dimensions.get('window').width,
                     height: 250
                 }}
+                fadeDuration={0}
             />
             <Text style={{ position: 'absolute', alignSelf: 'center', top: 100, color: 'white' }}>
                 Some Text

@@ -53,6 +53,8 @@ export default () => {
             Alert.alert( 'ERROR', 'AsyncStorage GetItem threw an error: ' + err.message );
         });
 
+        // TODO Fetch theme
+
     }, [] );
 
     let display;
