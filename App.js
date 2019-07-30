@@ -3,7 +3,7 @@ import { View, StatusBar, Platform, AsyncStorage, StyleSheet } from "react-nativ
 import { SafeAreaView } from "react-navigation";
 
 // Paper UI
-import {ActivityIndicator, Provider as PaperProvider} from "react-native-paper";
+import { Provider as PaperProvider } from "react-native-paper";
 
 // Navigator
 import Navigator from "~/components/Navigator";

@@ -9,7 +9,9 @@ import { Entypo, FontAwesome, MaterialIcons } from "@expo/vector-icons";
 // Screens
 import Welcome from "~/components/screens/WelcomeScreen";
 import MyCubes from "~/components/screens/MyCubesScreen";
-import AccountScreen from "~/components/screens/AccountScreen";
+import Profile from "~/components/screens/ProfileScreen";
+
+// TODO Dynamic Tabs
 
 // Our top level Navigation container
 export default createAppContainer( createMaterialBottomTabNavigator(
@@ -54,8 +56,8 @@ export default createAppContainer( createMaterialBottomTabNavigator(
                 }
             }
         },
-        Account: {
-            screen: AccountScreen,
+        Profile: {
+            screen: Profile,
             navigationOptions: {
                 tabBarIcon: ( opt ) => {
                     return(

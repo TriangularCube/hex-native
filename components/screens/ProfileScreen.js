@@ -5,8 +5,10 @@ import { createStackNavigator } from "react-navigation";
 
 import {Appbar, Text} from "react-native-paper";
 
-const Account = () => {
-    return(
+const Profile = () => {
+
+    // This is the section that deals with accounts at the top of the screen
+    const AccountSection = (
         <>
             <Image
                 source={require( '~/assets/background.jpg')}
@@ -19,18 +21,26 @@ const Account = () => {
                 Some Text
             </Text>
         </>
+    );
+
+    return(
+        <>
+
+             {AccountSection}
+
+        </>
     )
+};
+
+// Kill the header as we're using a custom top area
+Profile.navigationOptions = {
+    header: null
 };
 
 export default createStackNavigator(
     {
         Settings: {
-            screen: Account
-        }
-    },
-    {
-        defaultNavigationOptions: {
-            header: null
+            screen: Profile
         }
     }
 );

@@ -1,6 +1,8 @@
 import Auth from "@aws-amplify/auth";
 import API from "@aws-amplify/api";
 
+import { Alert } from "react-native";
+
 const GetUser = async () => {
 
     try{
@@ -32,10 +34,10 @@ const Get = async ( path ) => {
             }
         });
 
-        console.log( res );
+        return res;
 
     } catch( e ){
-        console.log( e.message );
+        return 'ERROR';
     }
     
 };
@@ -44,7 +46,7 @@ const Login = async ( name, pwd ) => {
 
     try{
 
-        const res = await Auth.signIn( name, pwd );
+        await Auth.signIn( name, pwd );
 
         return true;
 

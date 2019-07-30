@@ -81,8 +81,7 @@ export default () => {
                     )
                 }
             }}
-        </LoggedInContextConsumer>
-    ;
+        </LoggedInContextConsumer>;
 
     return(
         <View style={{ flex: 1, alignItems: 'center', backgroundColor: '#33ffa8' }}>
