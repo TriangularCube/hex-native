@@ -25,7 +25,6 @@ const Get = async ( path ) => {
     const user = await GetUser();
     const token = user ? user.getSignInUserSession().getIdToken().getJwtToken() : 'none';
 
-
     try{
 
         const res = await API.get( 'hex', path, {

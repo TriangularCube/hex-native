@@ -1,17 +1,18 @@
 // React
 import React, { useState, useEffect } from "react";
-import { View, Text, Button, Alert } from "react-native";
-import { createStackNavigator } from "react-navigation";
+import { View, Text, Button, Alert, FlatList } from "react-native";
+import { createStackNavigator, withNavigation } from "react-navigation";
 
 // Utilities
 import amp from "~/util/amp";
 import { LoggedInContextConsumer } from "~/util/LoggedInContext";
 
 // Paper components
-import {Title} from "react-native-paper";
+import {Title, List} from "react-native-paper";
 
 // Custom components
 import ScreenActivity from "../common/ScreenActivity";
+import Cube from "./CubeScreen";
 
 
 // More Micro-Optimization! Don't do this in the future!
@@ -33,12 +34,11 @@ const LoggedIn = () => {
     const fetchCubes = async () => {
 
         let res = await amp.Get( 'myCubes' );
-        console.log( res );
-        setCubeList( {} );
+        setCubeList( res.cubes );
 
     };
 
-    useEffect(  () => {
+    useEffect(() => {
         fetchCubes();
     }, [] );
 
@@ -49,24 +49,55 @@ const LoggedIn = () => {
         )
     }
 
+    if( cubeList.length === 0 ){
+        return (
+            <View style={{ flex: 1, alignItems: 'center', justifyContent: 'center' }}>
+                <Text>
+                    You have no cubes
+                </Text>
+            </View>
+        )
+    }
+
+    const ListItem =  withNavigation( (props) =>
+        <List.Item
+            title={props.cubeName}
+            description={`This is cube id ${props.cubeID}`}
+            onPress={ () => {
+                props.navigation.push('CubeScreen', { cubeName: props.cubeName, cubeID: props.cubeID });
+            }}
+        />
+    );
+
     // Else render the list
     return (
-        <View style={{ alignItems: 'center' }}>
+        <FlatList
+            data={cubeList}
+            renderItem={ ( item ) => {
+                const cubeName = item.item[0];
+                const cubeID = item.item[1];
+                return(
+                   <ListItem cubeName={cubeName} cubeID={cubeID}/>
+                )
+            }}
+            // HACK
+            keyExtractor={ ( item, index ) => index.toString() }
+        />
+
+        /*<View style={{ alignItems: 'center' }}>
             <Text>
                 This is the cube screen!
             </Text>
             <View>
                 <Button
                     onPress={ async () => {
-                        const res = await amp.Get( 'cubes' );
-                        console.log( res );
-                        Alert.alert( 'Result for cubes', JSON.stringify( res ) );
+                        Alert.alert( 'Result for cubes', JSON.stringify( cubeList ) );
                     }}
 
                     title='Press me!'
                 />
             </View>
-        </View>
+        </View>*/
     )
 };
 
@@ -102,6 +133,9 @@ export default createStackNavigator(
             navigationOptions: {
                 title: 'My Cubes'
             }
+        },
+        CubeScreen: {
+            screen: Cube
         }
     }
 );

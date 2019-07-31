@@ -1,9 +1,11 @@
-import React, { useState } from "react";
+import React from "react";
 import { View, Image, Dimensions } from "react-native";
 
 import { createStackNavigator } from "react-navigation";
 
-import {Appbar, Text} from "react-native-paper";
+import {Text, Button} from "react-native-paper";
+
+import { LoggedInContextConsumer } from "../../util/LoggedInContext";
 
 const Profile = () => {
 
@@ -18,9 +20,36 @@ const Profile = () => {
                 }}
                 fadeDuration={0}
             />
-            <Text style={{ position: 'absolute', alignSelf: 'center', top: 100, color: 'white' }}>
-                Some Text
-            </Text>
+            <LoggedInContextConsumer>
+                { context => {
+                    // If we're actually logged in
+                    return context.isLoggedIn ?
+                        <>
+                            <Text style={{ position: 'relative', alignSelf: 'center', bottom: 100, color: 'white' }}>
+                                You are logged in
+                            </Text>
+                            <Button
+                                mode='contained'
+                                onPress={ async () => {
+                                    // If logout successful
+                                    // if( await amp.Logout() ){
+                                    //     loggedInContext.setLoggedIn( false );
+                                    // } else {
+                                    //     // TODO logout unsuccessful
+                                    // }
+                                }}
+                                color='#ffffff'
+                                style={{ borderRadius: 0, position: 'relative', bottom: 70 }}>
+                                Logout!
+                            </Button>
+                        </>
+                    :
+                        <Text style={{ position: 'relative', alignSelf: 'center', bottom: 100, color: 'white' }}>
+                            You are NOT logged in
+                        </Text>
+                    ;
+                }}
+            </LoggedInContextConsumer>
         </>
     );
 
