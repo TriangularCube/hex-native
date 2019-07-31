@@ -1,11 +1,19 @@
 import React from "react";
 import { View } from "react-native";
-import { ActivityIndicator } from "react-native-paper";
+import {ActivityIndicator, Title} from "react-native-paper";
 
 
-export default () => {
+export default ( { text } ) => {
     return(
-        <View style={{ flex: 1, justifyContent: 'center' }}>
+        <View style={{ flex: 1, justifyContent: 'center', alignItems: 'center' }}>
+            { text &&
+                <>
+                    <Title>
+                        {text}
+                    </Title>
+                    <View style={{ height: 10 }} />
+                </>
+            }
             <ActivityIndicator size='large'/>
         </View>
     )

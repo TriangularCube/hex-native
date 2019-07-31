@@ -37,7 +37,7 @@ const Get = async ( path ) => {
         return res;
 
     } catch( e ){
-        return 'ERROR';
+        return `ERROR, ${e.message}`;
     }
     
 };
