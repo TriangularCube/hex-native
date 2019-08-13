@@ -1,8 +1,6 @@
 import Auth from "@aws-amplify/auth";
 import API from "@aws-amplify/api";
 
-import { Alert } from "react-native";
-
 const GetUser = async () => {
 
     try{
